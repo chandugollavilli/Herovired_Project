@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1" />
+    <meta name="author" content="SmartTemplates" />
+    <meta name="description" content="medikit admin dashboard" />
+    <meta name="keywords" content="medical dashboard, HTML UI KIT, medikit" />
+    <title>Medikit</title>
+    <link rel="stylesheet" href="../doctor/css/daterangepicker.css">
+    <link rel="stylesheet" href="../doctor/css/select2.css">
+    <link rel="stylesheet" href="../doctor/css/ion.rangeSlider.min.css">
+    <link rel="stylesheet" href="../doctor/css/dashboard.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet"> 
+	<style>
+		body{
+			
+			background-image: url("https://wallpaperaccess.com/full/1327232.jpg");
+			background-repeat: no-repeat;
+		}
+	  .main{
+		  padding: 20%;
+		  margin-left: 180px;
+		  /* background-color: grey; */
+	  }
+	</style>
+ </head>
+<body>
+    
+<div class="dashboard-wrap">
+
+	<header class="sidebar-header">
+		<center>	<img src="images/logo-4.png" width="118"></center>
+	</header>
+	
+	<!-- Section sidebar -->
+	<div class="section section--sidebar" id="sidebar">
+	
+			<nav class="sidebar-menu"> 
+				<ul>
+					<li class="dashboard"><a href="/"><b>Dashboard</b></a></li>
+					<li class="components has-submenu"><a href="#"><b>Components<span class="submenu-arrow"></span></b></a>
+						<ul class="sidebar-menu__submenu">
+							<li><a href="/doctor/charts">Charts</a></li>
+							<li><a href="/doctor/forms">Forms</a></li>
+							
+							<li><a href="/doctor/tables">Tables</a></li>
+			
+						</ul>
+					</li>
+					<li class="appointment"><a href="/doctor/appointments"><b>Appointments</b></a></li>
+					<li class="myschedule"><a href="/doctor/myschedule"><b>My Schedule</b></a></li>
+					<li class="doctors has-submenu"><a href="#"><b>Doctors<span class="submenu-arrow"></span></b></a>
+						<ul class="sidebar-menu__submenu">
+							<li><a href="/doctor/doctors-add">Add new doctor</a></li>
+							<li><a href="/doctor/doctors">View all doctors</a></li>
+						</ul>
+					</li>
+					<li class="patients has-submenu"><a href="#"><b>Patients<span class="submenu-arrow"></span></b></a>
+						<ul class="sidebar-menu__submenu">
+							<li><a href="/doctor/patients-add">Add new patient</a></li>
+							<li><a href="/doctor/patient">View all patients</a></li>
+							<li><a href="/doctor/patient-profile">Patient profile</a></li>
+						</ul>
+					</li>		
+					<li class="inbox"><a href="/doctor/messages"><b>Messages<span class="submenu-bubble">3</span></b></a></li>
+					<li class="settings"><a href="#"><b>Settings</b></a></li>
+				</ul>
+			</nav>
+	
+	</div>
+	<div class="main">
+    <form action="" method="post">
+       <label for="date">Date:</label>
+       <input type="date" id="date" name="date"><br><br>
+       <label for="time">start:</label>
+       <input type="time" id="time" name="time"><br><br>
+       <label for="timer">end:</label>
+       <input type="time" id="timer" name="timer"><br><br>
+	   <center><button type="button" onclick="checking()">My schedule</button></center>
+    </form></div>
+	<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/select2.min.js"></script>
+<script src="js/dropzone.js"></script>
+<script src="js/daterangepicker.min.js"></script>
+<script src="js/ion.rangeSlider.min.js"></script>
+<script src="js/jquery.dashboard-custom.js"></script>
+</body>
+<script>
+	function getTimeStops(start, end){
+    var startTime = moment(start, 'HH:mm');
+    var endTime = moment(end, 'HH:mm');
+  
+    if( endTime.isBefore(startTime) ){
+      endTime.add(1, 'day');
+    }
+    var timeStops = [];
+    while(startTime <= endTime){
+      timeStops.push(new moment(startTime).format('HH:mm'));
+      startTime.add(20, 'minutes');
+    }
+    return timeStops;
+
+   }
+//   console.log(timeStops)
+//   var timeStops = getTimeStops('11:00', '02:00');
+//   console.log('timeStops ', timeStops);
+//   var timeStops = getTimeStops('11:00', '23:59');
+//   console.log('timeStops ', timeStops);
+
+
+  function checking(){
+	  var tdate = document.getElementById('date').value;
+	  var ftime = document.getElementById('time').value;
+	  var ttime = document.getElementById('timer').value;
+	//   alert(ftime +"  "+ ttime)
+	  var timeslots = getTimeStops(ftime, ttime);
+	  console.log(timeslots)
+	  console.log(tdate)
+
+
+	  var data = {
+		    date:tdate,
+            inTime:ftime,
+            outTime:ttime 
+	  }
+          console.log(data)
+          fetch('/sendData', {
+            method:'post',
+            headers: {
+              'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data)
+
+          })
+          .catch((error)=>{
+            alert("try again")
+          })
+  }
+</script>
+</html>

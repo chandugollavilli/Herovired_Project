@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"><link rel="stylesheet" href="../webpage/Login/style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="box-form">
+	<div class="left">
+		<div class="overlay">
+		<h1>Hero MediCare</h1>
+		<p>Choose the experts in end to end Surgical Care<br>
+		You are in Safe Hands</p>
+		<span>
+			<p>Register with social media</p>
+			<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-google" aria-hidden="true"></i></a>
+			<a href="https://www.google.com/"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+		</span>
+		</div>
+	</div>
+	
+	
+		<div class="right">
+		<h4>Register</h4>
+		<p>Already Registered? <a href="/patient_login">login</a> </p>
+        <div class="inputs">
+			
+			<input type="name" id="name" placeholder="Enter your name" required>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="number" id="number" placeholder="Enter your Mobile Number" required>
+            <input type="password" id="password" placeholder="Enter your password" required>
+            <br><br>
+            <!-- <div class="subject"><select name="subject">
+                <option>Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+            </select> </div> -->
+		</div>
+        <br>
+			<center><button><a type="button" onclick="formValidation()" >Register</a></button></center>
+		
+		</div>
+			
+	</div>
+	
+</div>
+<!-- partial -->
+  
+</body>
+  <script>
+	  function formValidation(){
+        // alert("working")
+        var name=document.getElementById("name").value;
+	    	var email=document.getElementById("email").value;
+        var number=document.getElementById("number").value;
+        var password=document.getElementById("password").value;
+        console.log(name+" "+ email+"   "+number+'  '+ password )
+        if(name.length<=0){
+          // alert("username is required");
+          document.getElementById("message1").innerHTML="!Please enter a username"
+          name.focus();
+          
+        }
+	    	else if(email.length<=0){
+          document.getElementById("message3").innerHTML="!Please enter a valid mail"
+          mail.focus();
+          
+        }
+        else if(number.length<=0){
+          document.getElementById("message2").innerHTML="!Please enter mobilenumber"
+          number.focus();
+         
+        }
+        else if(password.length<=0){
+          document.getElementById("message4").innerHTML="!Please enter password"
+          password.focus();
+          
+        }
+        
+          var data = {
+            name: name,
+            email: email, 
+			      number: number,
+            password: password
+          }
+          console.log(data)
+          fetch('/webpage/patientRegister', {
+            method:'POST',
+            headers: {
+              'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+          .then(response => response.json())
+          .then(data2 => {
+            console.log(data2)
+            alert("Registration Successfully!");
+            window.location.href="/patient/patient_login"
+          })
+          .catch((error)=>{
+            alert("Alreay exist")
+          })
+        }
+        
+      
+  </script>
+</html>

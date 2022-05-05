@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"><link rel="stylesheet" href="../webpage/Login/style.css">
+
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="box-form">
+	<div class="left">
+		<div class="overlay">
+		<h1>Hero MediCare</h1>
+		
+		<span>
+			<p>Login with social media</p>
+			<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-google" aria-hidden="true"></i></a>
+			<a href="https://www.google.com/"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+		</span>
+		</div>
+	</div>
+	
+	
+		<div class="right">
+		<h5>Login</h5>
+		<div class="inputs">
+			<form>
+                <div class="form-field">
+                  <input type="email" id="useremail"placeholder="Email / Username" required/>
+                </div>
+                
+                <div class="form-field">
+                  <input type="password" id="password" placeholder="Password" required/>
+				</div><br><br>
+                <div class="form-field">
+                  <center><button class="btn" type="button" onclick="RegisterationData()">Log in</button></center>
+                </div>
+              </form>
+		</div>
+			<br><br>
+	</div>
+</div>
+<!-- partial -->
+</body>
+<script>
+
+  function RegisterationData() {
+      
+    var useremail= document.getElementById('useremail').value; 
+    var password= document.getElementById('password').value;
+    
+    if(useremail.length<=0){
+        document.getElementById("message1").innerHTML="!Please enter your email"
+        useremail.focus();
+    }
+    else if(password.length<=0){
+        document.getElementById("message2").innerHTML="!Please enter password"
+        password.focus();
+    }
+    if(useremail.length!=0 && password.length!=0){
+        var data ={
+            email:useremail,
+            password:password,
+        }
+        console.log(data);
+        fetch('/webpage/doctordata',{
+        method:'POST',
+        headers:{
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify(data)
+        })
+        .then(response=>response.json())
+        .then(data=>{
+          console.log('success:',data);
+
+          window.location.href="/doctor/dashboard"
+        })
+        .catch((error)=>{
+          alert("Not valid")
+        })
+    }
+    
+  };
+  
+   
+  </script>
+</html>

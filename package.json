@@ -12,6 +12,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "express-session": "^1.17.2",
+    "moment": "^2.29.3",
     "mongoose": "^6.2.10",
     "node": "^17.7.2",
     "session": "^0.1.0"

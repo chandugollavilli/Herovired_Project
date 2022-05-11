@@ -28,13 +28,6 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: NiceAdmin - v2.2.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -66,7 +59,7 @@
                   <form class="row g-3 needs-validation" novalidate>
 
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
+                      <label for="yourUsername" class="form-label" id="email">Username</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                         <input type="text" name="username" class="form-control" id="yourUsername" required>
@@ -75,7 +68,7 @@
                     </div>
 
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
+                      <label for="yourPassword" class="form-label" id="password">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" required>
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
@@ -87,7 +80,7 @@
                       </div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Login</button>
+                      <button class="btn btn-primary w-100" type="button" oncilck=" validation()">Login</button>
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
@@ -130,5 +123,44 @@
   <script src="assets/js/main.js"></script>
 
 </body>
+
+<script>
+  function validation(){
+ var mail_id = document.getElementById("email").value;
+     var password = document.getElementById("password").value;
+     if(mail_id.length<=0){
+       // alert("username is required");
+       document.getElementById("message101").innerHTML="!Please enter your email"
+       mail_id.focus();
+       
+     }
+     else if(password.length<=0){
+       document.getElementById("message201").innerHTML="!Please enter password"
+       password.focus();
+     }
+     if(mail_id.length!=0 && password.length!=0){
+       var data = {
+         email : mail_id,
+         password : password
+       }
+     console.log(data);
+     }
+     fetch('/logindata',{
+       method:'post',
+       headers: {
+         'Content-Type' : 'application/json'
+       },
+       body: JSON.stringify(data)
+     })
+     .then(response => response.json())
+     .then(data => {
+       console.log(data)
+       window.location.href="/patient/Dashboard"
+     })
+     .catch((error)=>{
+         alert("not valid")
+       })
+}
+</script>
 
 </html>

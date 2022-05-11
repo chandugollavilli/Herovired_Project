@@ -24,17 +24,26 @@ app.use('/doctor', doctorrouter)
 
 //sessions
 
-//npm install express-session
 
-var sessions=require('express-session');
-app.use(
-    sessions({
-        cookieName:"sessions",
-        secret:"blargadeeblargblarg",
-        saveUninitialized:true,
-        resave:false,
-    })
-);
+const session = require('express-session');
+app.use(session({secret:'Teja'}));
+
+app.use(express.json());
+
+app.get("/doctordata", function(req,res){
+    console.log(req.session)
+    if(req.session.visited == false || req.session.visited == undefined)
+    {
+        // res.sendFile(__dirname+'/webpage/login.html');
+        res.sendFile(__dirname+'/doctor/index.html');
+    }
+    else
+    {
+        res.sendFile(__dirname+'/webpage/login.html');
+    }    
+});
+
+
 
 
 //webpage page

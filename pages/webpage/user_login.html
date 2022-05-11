@@ -43,7 +43,7 @@
 			<p>forget password?</p>
 		</div>
 			<br>
-			<center><button><a href="/patient_login" type="button"  onclick="validation()">Log in</a></button></center>
+			<center><button><a type="button"  onclick="validation()">Log in</a></button></center>
 	</div>
 	
 </div>
@@ -58,7 +58,7 @@
     
     if(email.length<=0){
         document.getElementById("message1").innerHTML="!Please enter your email"
-        useremail.focus();
+        email.focus();
     }
     else if(password.length<=0){
         document.getElementById("message2").innerHTML="!Please enter password"
@@ -69,7 +69,7 @@
             email:email,
             password:password,
         }
-        console.log(data);
+        // console.log(data);
         fetch('/webpage/patientData',{
         method:'POST',
         headers:{
@@ -84,7 +84,7 @@
           window.location.href="/patient/dashboard"
         })
         .catch((error)=>{
-          console.log("error")
+          console.log(error)
           alert("Not valid")
         })
     }

@@ -72,14 +72,14 @@ router.post("/doctordata",function(req,res){
 ////// patient //////
 router.post("/patientData",function(req,res){
     console.log(req.body);
-    patientData.findOne({'email':req.body.email},function(err,docs){
+    patientData.findOne({'email':req.body.email,'password':req.body.password},function(err,docs){
         if(err || docs==null){
             console.log(err)
             res.sendStatus(500);
         }
         else{
-            console.log(docs);
-            res.send('true');
+            console.log("docs");
+            res.send({message:"working"});
 
             
         }
@@ -89,21 +89,21 @@ router.post("/patientData",function(req,res){
 
 
 
-router.get('/patientData',(req,res)=>{
-    patientData.find(function(err,result){
-            if(err || result==null)
-            {
+// router.get('/patientData',(req,res)=>{
+//     patientData.find(function(err,result){
+//             if(err || result==null)
+//             {
                 
-                console.log(err)
-            }
-            else if(result!=undefined)
-            {
+//                 console.log(err)
+//             }
+//             else if(result!=undefined)
+//             {
                 
-                console.log(result)
-                res.send(result);
-            }
-        })
-    });
+//                 console.log(result)
+//                 res.send(result);
+//             }
+//         })
+//     });
 
 
 
